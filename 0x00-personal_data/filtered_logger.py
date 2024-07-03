@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ Filtered logger module """
+import bcrypt
 import logging
 import mysql.connector
 import os
@@ -60,3 +61,4 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                                            password=password,
                                                            database=db)
     return connector
+
