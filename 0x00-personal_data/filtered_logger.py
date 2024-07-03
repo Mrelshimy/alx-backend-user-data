@@ -18,7 +18,7 @@ class RedactingFormatter(logging.Formatter):
 
     def format(self, record: logging.LogRecord) -> str:
         """ Formatter method to format incoming logs """
-        record = logging.Formatter.format(self, record)
+        record = super(RedactingFormatter, self).format(record)
         record = filter_datum(self.fields, self.REDACTION,
                               record, self.SEPARATOR)
         return record
