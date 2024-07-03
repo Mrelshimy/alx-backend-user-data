@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """ Filtered logger module """
 import logging
+import mysql.connector
+import os
 import re
 from typing import List
 
@@ -45,3 +47,16 @@ def get_logger() -> logging.Logger:
     stream_handler.setFormatter(formatter)
     logger.addHandler(stream_handler)
     return logger
+
+
+def get_db() -> mysql.connector:
+    """ function to return mysql.connector object """
+    user = os.environ.get('PERSONAL_DATA_DB_USERNAME', default="root")
+    password = os.environ.get('PERSONAL_DATA_DB_PASSWORD', default="")
+    host = os.environ.get('PERSONAL_DATA_DB_HOST', default="localhost")
+    db = os.environ.get('PERSONAL_DATA_DB_NAME')
+    connector = mysql.connector.connection.MySQLConnection(user=user,
+                                                           host=host,
+                                                           password=password,
+                                                           database=db)
+    return connector
