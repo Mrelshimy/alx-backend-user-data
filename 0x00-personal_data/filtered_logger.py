@@ -5,15 +5,6 @@ import re
 from typing import List
 
 
-def filter_datum(fields: List[str], redaction: str,
-                 message: str, separator: str) -> str:
-    """ Function to return log message obfuscated """
-    for field in fields:
-        message = re.sub(field+'=.*?'+separator,
-                         field+'='+redaction+separator, message)
-    return message
-
-
 class RedactingFormatter(logging.Formatter):
     """ Redacting Formatter class """
 
@@ -28,6 +19,15 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """ Formatter method to format incoming logs """
         record = logging.Formatter.format(self, record)
-        record = filter_datum(self.fields, RedactingFormatter.REDACTION,
-                              record, RedactingFormatter.SEPARATOR)
+        record = filter_datum(self.fields, self.REDACTION,
+                              record, self.SEPARATOR)
         return record
+
+
+def filter_datum(fields: List[str], redaction: str,
+                 message: str, separator: str) -> str:
+    """ Function to return log message obfuscated """
+    for field in fields:
+        message = re.sub(field+'=.*?'+separator,
+                         field+'='+redaction+separator, message)
+    return message
