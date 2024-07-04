@@ -62,3 +62,15 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
                                                            database=db)
     return connector
 
+def main():
+    """ entry point """
+    db = get_db()
+    cursor = db.cursor()
+    cursor.execute('SELECT * FROM users;')
+    fields = cursor.column_names
+    logger = get_logger()
+    for row in cursor:
+        message = ''.join(f'{f}={str(r)}; ' for r, f in zip(row, fields))
+        logger.info(message.strip())
+    cursor.close()
+    db.close()
