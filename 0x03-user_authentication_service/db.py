@@ -31,5 +31,5 @@ class DB:
         """ Add user to the db method """
         new_user = User(email=email, hashed_password=hashed_password)
         self.__session.add(new_user)
-        self._session.commit()
+        self.__session.commit()
         return new_user
