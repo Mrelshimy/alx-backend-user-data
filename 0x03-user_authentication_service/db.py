@@ -47,7 +47,10 @@ class DB:
 
     def update_user(self, user_id, **kwargs):
         """ Update user method """
-        user = self.find_user_by(id=user_id)
+        try:
+            user = self.find_user_by(id=user_id)
+        except NoResultFound:
+            raise ValueError
         for key, value in kwargs.items():
             if key not in user.__dict__:
                 raise ValueError
