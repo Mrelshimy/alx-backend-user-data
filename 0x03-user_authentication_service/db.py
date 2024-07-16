@@ -47,14 +47,10 @@ class DB:
 
     def update_user(self, user_id, **kwargs):
         """ Update user method """
-        try:
-            user = self.find_user_by(id=user_id)
-        except NoResultFound:
-            raise ValueError
+        user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            if hasattr(user, key):
-                setattr(user, key, value)
-            else:
+            if key not in user.__dict__:
                 raise ValueError
+            setattr(user, key, value)
         self._session.commit()
-        return user
+        return None
