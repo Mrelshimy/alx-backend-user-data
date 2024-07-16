@@ -49,7 +49,7 @@ class DB:
         """ Update user method """
         user = self.find_user_by(id=user_id)
         for key, value in kwargs.items():
-            if not hasattr(user, key):
+            if key not in user.__dict__:
                 raise ValueError
             setattr(user, key, value)
         self._session.commit()
