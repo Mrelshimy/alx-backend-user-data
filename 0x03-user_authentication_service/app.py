@@ -42,12 +42,12 @@ def login() -> str:
 def logout() -> str:
     """logout route
     """
-    session_id = request.cookies.get('session_id')
+    session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
-    if not user:
+    if user is None or session_id is None:
         abort(403)
     AUTH.destroy_session(user.id)
-    return redirect('/')
+    return redirect("/")
 
 
 if __name__ == "__main__":
