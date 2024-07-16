@@ -5,12 +5,18 @@ from typing import Union
 from db import DB
 from user import User
 from sqlalchemy.orm.exc import NoResultFound
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> str:
     """ Return a hashed password """
     hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
     return hashed
+
+
+def _generate_uuid() -> str:
+    """ generate uuid4 function """
+    return str(uuid4())
 
 
 class Auth:
