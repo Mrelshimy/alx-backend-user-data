@@ -101,4 +101,4 @@ class Auth:
         else:
             user.hashed_password = _hash_password(password)
             user.reset_token = None
-            return None       
+            return None
