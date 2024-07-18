@@ -71,6 +71,6 @@ class Auth:
             return None
 
 
-    def get_reset_password_token():
+    def get_reset_password_token(email: str) -> str:
         """ Reset Password token generator """
         
