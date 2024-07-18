@@ -49,16 +49,15 @@ def logout():
     return redirect("/")
 
 
-@app.route("/profile", methods=["GET"], strict_slashes=False)
+@app.route("/profile", methods=["GET"])
 def profile() -> str:
-    """
-    Return a user's email based on session_id in the received cookies
-    """
-    session_id = request.cookies.get("session_id")
+    """ Get profile method to validate user availability """
+    session_id = request.cookies.get("session_id", None)
     user = AUTH.get_user_from_session_id(session_id)
-    if user:
+    if user is None or session_id is None:
+        abort(403)
+    else:
         return jsonify({"email": f"{user.email}"}), 200
-    abort(403)
 
 
 if __name__ == "__main__":
