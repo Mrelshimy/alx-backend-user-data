@@ -74,7 +74,8 @@ class Auth:
         """ Reset Password token generator """
         try:
             user = self._db.find_user_by(email=email)
-            user.reset_token = _generate_uuid()
-            return user.reset_token
         except NoResultFound:
             raise ValueError
+        else:
+            user.reset_token = _generate_uuid()
+            return user.reset_token
